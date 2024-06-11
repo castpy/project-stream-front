@@ -6,13 +6,13 @@ type CustomerContextType = {
     id: string | null;
     name: string | null;
     email: string | null;
-  };
+  } | undefined;
   setCustomer: React.Dispatch<
     React.SetStateAction<{
       id: string | null;
       name: string | null;
       email: string | null;
-    }>
+    } | undefined>
   >;
 };
 
@@ -25,7 +25,7 @@ export const CustomerProvider: React.FC<{ children: React.ReactNode }> = ({
     id: string | null;
     name: string | null;
     email: string | null;
-  }>({ id: null, name: null, email: null });
+  } | undefined>(undefined);
 
   return (
     <CustomerContext.Provider value={{ customer, setCustomer }}>

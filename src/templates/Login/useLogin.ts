@@ -44,9 +44,7 @@ export default function useLogin() {
         if (response.status === 201) {
           cookieProvider.setCurrentCookie(response.data.token, true);
           createAlertMessage("Seja bem-vindo!", "success");
-          setTimeout(() => {
-            router.push("/");
-          }, 3000);
+          router.push("/");
         }
       } catch (error) {
         const axiosError = error as AxiosError;
