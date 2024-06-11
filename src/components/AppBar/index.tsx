@@ -14,6 +14,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAppBar } from "./useAppBar";
+import { Colors } from "@/theme/colors";
+import { useCustomerCookie } from "@/context/cookie.context";
 
 function AppBarComp() {
   const {
@@ -24,38 +26,47 @@ function AppBarComp() {
     handleCloseNavMenu,
     handleCloseUserMenu,
     pages,
-    cookie,
     settings,
+    routesPage,
+    routesSettings,
     handleLogin,
+    handleMenuItemClick,
   } = useAppBar();
+  const cookieProvider = useCustomerCookie();
 
   return (
     <AppBar
-      position="static"
-      // sx={{
-      //   backdropFilter: "blur(10px)",
-      //   backgroundColor: "rgba(255, 255, 255, 0.4)",
-      // }}
+      position="fixed"
+      sx={{
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(255, 255, 255, 0.1)", // Mais translúcido
+      }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <AdbIcon
+            sx={{
+              display: { xs: "none", md: "flex" },
+              mr: 1,
+              color: Colors.primary,
+            }}
+          />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: Colors.primary,
               textDecoration: "none",
             }}
           >
-            LOGO
+            PROJECT STREAM
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -87,14 +98,20 @@ function AppBarComp() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page, index) => (
+                <MenuItem key={page} onClick={() => handleMenuItemClick(routesPage[index])}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <AdbIcon
+            sx={{
+              display: { xs: "flex", md: "none" },
+              mr: 1,
+              color: Colors.primary,
+            }}
+          />
           <Typography
             variant="h5"
             noWrap
@@ -107,17 +124,17 @@ function AppBarComp() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: Colors.primary,
               textDecoration: "none",
             }}
           >
-            LOGO
+            PROJECT STREAM
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleMenuItemClick(routesPage[index])}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -125,7 +142,7 @@ function AppBarComp() {
             ))}
           </Box>
 
-          {cookie ? (
+          {cookieProvider.currentCookie ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -148,15 +165,15 @@ function AppBarComp() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                {settings.map((setting, index) => (
+                  <MenuItem key={setting} onClick={() => handleMenuItemClick(routesSettings[index])}>
+                    <Typography textAlign="center" color='black'>{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
           ) : (
-            <Button color="inherit" onClick={handleLogin}>
+            <Button color="primary" onClick={handleLogin}>
               Login
             </Button>
           )}
