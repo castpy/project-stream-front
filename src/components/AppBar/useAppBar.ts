@@ -1,9 +1,12 @@
 import React from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { getMeService } from "@/services/customer/get.me.service";
+import { useCustomer } from "@/context/customer.context";
 
 export function useAppBar() {
   const router = useRouter();
+  const { setCustomer } = useCustomer()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -39,6 +42,13 @@ export function useAppBar() {
     router.push(route);
   }
 
+  const handleGetMeService = async () => {
+    const response = await getMeService()
+    if (response.status === 200) {
+      setCustomer(response.data)
+    }
+  }
+
   return {
     anchorElNav,
     anchorElUser,
@@ -52,5 +62,6 @@ export function useAppBar() {
     routesSettings,
     handleLogin,
     handleMenuItemClick,
+    handleGetMeService,
   };
 }

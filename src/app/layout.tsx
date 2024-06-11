@@ -7,6 +7,7 @@ import "./global.css";
 import { Colors } from "@/theme/colors";
 import { Box } from "@mui/material";
 import { CookieProvider } from "@/context/cookie.context";
+import { CustomerProvider } from "@/context/customer.context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +29,12 @@ export default function RootLayout({
       >
         <AppRouterCacheProvider>
           <StyledRoot>
-            <CookieProvider>
-              <AppBarComp />
-              <Box sx={{ paddingTop: "64px" }}>
-                {children}
-              </Box>
-            </CookieProvider>
+            <CustomerProvider>
+              <CookieProvider>
+                <AppBarComp />
+                <Box sx={{ paddingTop: "64px" }}>{children}</Box>
+              </CookieProvider>
+            </CustomerProvider>
           </StyledRoot>
         </AppRouterCacheProvider>
       </body>
