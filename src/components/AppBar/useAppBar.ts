@@ -1,9 +1,14 @@
 import React from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { getMeService } from "@/services/customer/get.me.service";
+import { useCustomer } from "@/context/customer.context";
+import { useCustomerCookie } from "@/context/cookie.context";
 
 export function useAppBar() {
   const router = useRouter();
+  const { setCustomer } = useCustomer();
+  const { setCurrentCookie } = useCustomerCookie();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -32,12 +37,27 @@ export function useAppBar() {
 
   const pages = ["Inicio", "Descobrir"];
   const routesPage = ["/", "/discover"];
-  const settings = ["Meu Perfil", "Logout"];
-  const routesSettings = ["/profile", "/"];
+  const settings = ["Meu Perfil", "Sair"];
+  const routesSettings = ["/user/me", "/login"];
 
-  const handleMenuItemClick = (route: string) => {
+  const handleMenuItemClick = (
+    route: string,
+    title?: string,
+  ) => {
+    if (title == "Sair") {
+      setCustomer(undefined);
+      setCurrentCookie(undefined, false);
+      router.push(route);
+    }
     router.push(route);
-  }
+  };
+
+  const handleGetMeService = async () => {
+    const response = await getMeService();
+    if (response.status === 200) {
+      setCustomer(response.data);
+    }
+  };
 
   return {
     anchorElNav,
@@ -52,5 +72,6 @@ export function useAppBar() {
     routesSettings,
     handleLogin,
     handleMenuItemClick,
+    handleGetMeService,
   };
 }

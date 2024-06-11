@@ -16,6 +16,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useAppBar } from "./useAppBar";
 import { Colors } from "@/theme/colors";
 import { useCustomerCookie } from "@/context/cookie.context";
+import { useCustomer } from "@/context/customer.context";
 
 function AppBarComp() {
   const {
@@ -31,8 +32,17 @@ function AppBarComp() {
     routesSettings,
     handleLogin,
     handleMenuItemClick,
+    handleGetMeService,
   } = useAppBar();
   const cookieProvider = useCustomerCookie();
+  const { customer } = useCustomer();
+
+  React.useEffect(() => {
+    if (cookieProvider.currentCookie) {
+      handleGetMeService();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cookieProvider.currentCookie]);
 
   return (
     <AppBar
@@ -99,7 +109,10 @@ function AppBarComp() {
               }}
             >
               {pages.map((page, index) => (
-                <MenuItem key={page} onClick={() => handleMenuItemClick(routesPage[index])}>
+                <MenuItem
+                  key={page}
+                  onClick={() => handleMenuItemClick(routesPage[index])}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -142,11 +155,16 @@ function AppBarComp() {
             ))}
           </Box>
 
-          {cookieProvider.currentCookie ? (
+          {cookieProvider.currentCookie && customer ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt={customer.name as string}
+                    title={customer.name as string}
+                  >
+                    {customer.name?.charAt(0) || "A"}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -166,8 +184,15 @@ function AppBarComp() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting, index) => (
-                  <MenuItem key={setting} onClick={() => handleMenuItemClick(routesSettings[index])}>
-                    <Typography textAlign="center" color='black'>{setting}</Typography>
+                  <MenuItem
+                    key={setting}
+                    onClick={() =>
+                      handleMenuItemClick(routesSettings[index], setting)
+                    }
+                  >
+                    <Typography textAlign="center" color="black">
+                      {setting}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
