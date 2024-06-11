@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 
 export function useAppBar() {
   const router = useRouter();
-  const cookie = Cookies.get(process.env.NEXT_PUBLIC_COOKIE_NAME_CUSTOMER as string)
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -26,10 +28,16 @@ export function useAppBar() {
 
   const handleLogin = () => {
     router.push("/login");
-  }
+  };
 
   const pages = ["Inicio", "Descobrir"];
+  const routesPage = ["/", "/discover"];
   const settings = ["Meu Perfil", "Logout"];
+  const routesSettings = ["/profile", "/"];
+
+  const handleMenuItemClick = (route: string) => {
+    router.push(route);
+  }
 
   return {
     anchorElNav,
@@ -40,7 +48,9 @@ export function useAppBar() {
     handleCloseUserMenu,
     pages,
     settings,
-    cookie,
-    handleLogin
-  }
+    routesPage,
+    routesSettings,
+    handleLogin,
+    handleMenuItemClick,
+  };
 }

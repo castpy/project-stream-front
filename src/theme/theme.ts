@@ -12,6 +12,26 @@ const roboto = Roboto({
 const theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 700,
+      color: Colors.white,
+    },
+    body1: {
+      fontSize: '1rem',
+      fontWeight: 400,
+      color: Colors.white,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
+      color: Colors.white,
+    },
+    caption: {
+      fontSize: '0.75rem',
+      fontWeight: 300,
+      color: Colors.grey,
+    }
   },
   palette: {
     mode: "light",

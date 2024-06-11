@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import AppBarComp from "@/components/AppBar";
 import { StyledRoot } from "@/theme/StyledRoot";
-import './global.css'
+import "./global.css";
+import { Colors } from "@/theme/colors";
+import { Box } from "@mui/material";
+import { CookieProvider } from "@/context/cookie.context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={inter.className}>
+      <body
+        className={inter.className}
+        style={{ backgroundColor: Colors.black, color: Colors.white }}
+      >
         <AppRouterCacheProvider>
           <StyledRoot>
-            <AppBarComp />
-            {children}
+            <CookieProvider>
+              <AppBarComp />
+              <Box sx={{ paddingTop: "64px" }}>
+                {children}
+              </Box>
+            </CookieProvider>
           </StyledRoot>
         </AppRouterCacheProvider>
       </body>
