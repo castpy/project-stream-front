@@ -1,26 +1,34 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Link from "next/link";
-import { Highlights } from "@/constants/mock";
+import useHighlights from "./useHighlights";
 
 const HighlightsComp = () => {
-  const router = useRouter();
-
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [previousImageIndex, setPreviousImageIndex] = useState<number | null>(
-    null
-  );
+  const {
+    Highlights,
+    currentImageIndex,
+    previousImageIndex,
+    handleGetHighlights,
+    setCurrentImageIndex,
+    setPreviousImageIndex,
+  } = useHighlights();
+  
+  useEffect(() => {
+    if (Highlights) {
+      const timer = setTimeout(() => {
+        setPreviousImageIndex(currentImageIndex);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Highlights.length);
+      }, 8000);
+      return () => clearTimeout(timer);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentImageIndex, Highlights]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPreviousImageIndex(currentImageIndex);
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % Highlights.length);
-    }, 8000);
-
-    return () => clearTimeout(timer);
-  }, [currentImageIndex]);
+    handleGetHighlights();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box
@@ -51,7 +59,7 @@ const HighlightsComp = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundImage: `url(${Highlights[previousImageIndex].src})`,
+            backgroundImage: `url(${Highlights ? Highlights[previousImageIndex].movie.image : ""})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
@@ -66,7 +74,7 @@ const HighlightsComp = () => {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: `url(${Highlights[currentImageIndex].src})`,
+          backgroundImage: `url(${Highlights ? Highlights[currentImageIndex].movie.image : ""})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -121,9 +129,9 @@ const HighlightsComp = () => {
             },
           }}
         >
-          {Highlights[currentImageIndex].name}
+          {Highlights ? Highlights[currentImageIndex].movie.title : ""}
         </Typography>
-        <Link href={`/movie/${Highlights[currentImageIndex].id}`}>
+        <Link href={`/movie/${Highlights ?  Highlights[currentImageIndex].movieId : ""}`}>
           <Button
             color="secondary"
             variant="contained"

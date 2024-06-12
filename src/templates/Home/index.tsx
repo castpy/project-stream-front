@@ -21,14 +21,6 @@ const HomeTemplate = () => {
         categorie={ListMovies.categorie}
         movies={ListMovies.movies}
       />
-      <ListMovieComp
-        categorie={ListMovies.categorie}
-        movies={ListMovies.movies}
-      />
-      <ListMovieComp
-        categorie={ListMovies.categorie}
-        movies={ListMovies.movies}
-      />
     </Box>
   );
 };
