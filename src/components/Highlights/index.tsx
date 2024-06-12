@@ -3,24 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Link from "next/link";
-
-const Highlights = [
-  {
-    id: "db2d0960-ffbc-4f5d-baab-4e3dd7943a22",
-    src: "https://i3.ytimg.com/vi/xlqhdaLhRVY/maxresdefault.jpg",
-    name: "Dynamo - O mágico",
-  },
-  {
-    id: "87d7f3bc-041b-4ff4-98ad-a453138ed393",
-    src: "https://i3.ytimg.com/vi/cG9ZOLVw56Q/maxresdefault.jpg",
-    name: "A volta de quem não foi - 3",
-  },
-  {
-    id: "7578e242-5d93-42ea-af08-f6dbf185d145",
-    src: "https://i3.ytimg.com/vi/HJ2nNvCRzW0/maxresdefault.jpg",
-    name: "The Path",
-  },
-];
+import { Highlights } from "@/constants/mock";
 
 const HighlightsComp = () => {
   const router = useRouter();
@@ -140,7 +123,7 @@ const HighlightsComp = () => {
         >
           {Highlights[currentImageIndex].name}
         </Typography>
-        <Link href={`/video/${Highlights[currentImageIndex].id}`}>
+        <Link href={`/movie/${Highlights[currentImageIndex].id}`}>
           <Button
             color="secondary"
             variant="contained"
