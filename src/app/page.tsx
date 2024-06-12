@@ -1,9 +1,7 @@
-import { Typography } from "@mui/material";
+import HomeTemplate from "@/templates/Home";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <Typography variant="h1" align="center">
-      Home
-    </Typography>
+    <HomeTemplate />
   );
 }
