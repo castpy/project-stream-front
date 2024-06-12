@@ -1,5 +1,3 @@
-import { grey } from "@mui/material/colors";
-
 export const Colors = {
   ///////////////
   // Brand Color
@@ -17,6 +15,6 @@ export const Colors = {
   // Solid Color
   ///////////////
   white: "#fff",
-  grey: "#707070",
+  grey: "#18181B",
   black: "#000",
 };
