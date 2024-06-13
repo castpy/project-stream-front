@@ -8,7 +8,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
   return (
@@ -31,8 +30,20 @@ const ListMovieComp = ({ categorie, movies }: ListMovieProps) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: isMobile ? 2 : 3,
-    slidesToScroll: isMobile ? 2 : 3,
+    slidesToShow: isMobile
+      ? 2
+      : movies.length >= 3
+      ? 3
+      : movies.length <= 2
+      ? 2
+      : 3,
+    slidesToScroll: isMobile
+      ? 2
+      : movies.length >= 3
+      ? 3
+      : movies.length <= 2
+      ? 2
+      : 3,
     adaptiveHeight: true,
     nextArrow: <SampleNextArrow />,
   };
