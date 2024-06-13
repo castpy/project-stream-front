@@ -25,13 +25,19 @@ export default function useHighlights() {
     }
   }
 
+  const pushToWatch = (id: string) => {
+    router.push(`/movie/${id}`);
+  }
+
 
   return {
     Highlights,
+    loading,
     currentImageIndex,
     previousImageIndex,
     handleGetHighlights,
     setCurrentImageIndex,
     setPreviousImageIndex,
+    pushToWatch,
   };
 }
