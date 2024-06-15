@@ -42,7 +42,7 @@ export default function RootLayout({
           <StyledRoot>
             <CustomerProvider>
               <CookieProvider>
-                <AppBarComp />
+                {/* <AppBarComp /> */}
                 <Box sx={{ paddingTop: "75px" }}>{children}</Box>
               </CookieProvider>
             </CustomerProvider>
